@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Pacifico&display=swap");
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+  font-weight: 400;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Mulish", sans-serif;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #76757a;
+}
+
+main {
+  padding: 5rem 10rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+p {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+small {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+li {
+  font-size: 2rem;
+}
+
+.test-user {
+  background-color: #76757a;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 1.1rem;
+}
+
+.test-user.current-user {
+  background-color: #003366;
+}
+
+.msg {
+  margin: 4rem 0;
+}
+
+.real-msg {
+  max-width: 20vw;
+  color: #000;
+}
+
+.logout-btn {
+  margin: 2rem 0;
+}
+
+.fa-icon:hover {
+  color: #000 !important;
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}
+
+.message-form {
+  position: fixed;
+  bottom: 0;
+  left: 10rem;
+  right: 10rem;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #ccc;
+}
+
+.message-form input {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.message-form button {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 767px) {
+  main {
+    padding: 2rem;
+  }
+
+  .message-form {
+    left: 2rem;
+    right: 2rem;
+  }
+
+  .real-msg {
+    max-width: 80vw;
+  }
+}

@@ -24,7 +24,6 @@ function Home() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const ws = useRef(null);
-
   const messagesEndRef = useRef(null);
 
   const currentUser = token ? parseJwt(token) : null;
@@ -47,9 +46,7 @@ function Home() {
 
     ws.current = new WebSocket(wsUrl);
 
-    ws.current.onopen = () => {
-      console.log("✅ WebSocket connected");
-    };
+    ws.current.onopen = () => console.log("✅ WebSocket connected");
 
     ws.current.onmessage = (event) => {
       try {
@@ -64,15 +61,11 @@ function Home() {
       }
     };
 
-    ws.current.onclose = (event) => {
+    ws.current.onclose = (event) =>
       console.log("⚠️ WebSocket disconnected", event.code, event.reason);
-    };
 
-    ws.current.onerror = (error) => {
-      console.error("WebSocket error", error);
-    };
+    ws.current.onerror = (error) => console.error("WebSocket error", error);
 
-    // Fetch initial messages
     fetch(`${API_BASE}/messages/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -111,16 +104,6 @@ function Home() {
     }
   };
 
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const yy = String(date.getFullYear()).slice(2);
-    const mm = String(date.getMonth() + 1).padStart(2, "0");
-    const dd = String(date.getDate()).padStart(2, "0");
-    const hh = String(date.getHours()).padStart(2, "0");
-    const min = String(date.getMinutes()).padStart(2, "0");
-    return `${dd}/${mm}/${yy} ${hh}:${min}`;
-  };
-
   const handleDelete = (id) => {
     if (!window.confirm("Are you sure you want to delete this message?"))
       return;
@@ -146,55 +129,61 @@ function Home() {
       });
   };
 
-  return (
-    <div>
-      <header></header>
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const yy = String(date.getFullYear()).slice(2);
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    const hh = String(date.getHours()).padStart(2, "0");
+    const min = String(date.getMinutes()).padStart(2, "0");
+    return `${dd}/${mm}/${yy} ${hh}:${min}`;
+  };
 
+  return (
+    <main>
       <h1>Messages (WS)</h1>
       <FontAwesomeIcon
         icon={faRightFromBracket}
         onClick={logout}
         className="logout-btn fa-icon"
         title="Logout"
-        style={{ cursor: "pointer", fontSize: "2rem", color: "#76757a" }}
+        style={{ cursor: "pointer" }}
       />
 
-      {messages.map((msg) => (
-        <div className="msg" key={msg.id}>
-          <small>
-            <span
-              className={`test-user ${
-                msg.owner.id === currentUserId ? "current-user" : ""
-              }`}
-            >
-              {msg.owner.first_name[0]} {msg.owner.last_name[0]}
-            </span>{" "}
-            {formatDate(msg.timestamp)}
-            {msg.owner.id === currentUserId && (
-              <FontAwesomeIcon
-                icon={faTrash}
-                onClick={() => handleDelete(msg.id)}
-                style={{
-                  marginLeft: "8px",
-                  cursor: "pointer",
-                  color: "#76757a",
-                }}
-                className="fa-icon"
-                title="Delete message"
-              />
-            )}
-          </small>
-          <p className="real-msg">{msg.content}</p>
-        </div>
-      ))}
+      {messages.map((msg) => {
+        const isCurrentUser = msg.owner.id === currentUserId;
+        return (
+          <div
+            className={`msg ${isCurrentUser ? "current-user" : ""}`}
+            key={msg.id}
+          >
+            <small>
+              <span
+                className={`test-user ${isCurrentUser ? "current-user" : ""}`}
+              >
+                {msg.owner.first_name[0]} {msg.owner.last_name[0]}
+              </span>{" "}
+              {formatDate(msg.timestamp)}
+            </small>
+
+            <div className="msg-bubble">
+              {msg.content}
+              {isCurrentUser && (
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  onClick={() => handleDelete(msg.id)}
+                  className="fa-icon delete-icon"
+                  title="Delete message"
+                />
+              )}
+            </div>
+          </div>
+        );
+      })}
 
       <div ref={messagesEndRef} />
 
-      <form
-        onSubmit={handleSend}
-        className="message-form"
-        style={{ marginTop: "1rem" }}
-      >
+      <form onSubmit={handleSend} className="message-form">
         <label htmlFor="new-message">New Message</label>
         <input
           id="new-message"
@@ -204,21 +193,13 @@ function Home() {
         />
         <button
           type="submit"
-          className="logout-btn fa-icon"
+          className="fa-icon send-msg-icon"
           title="Send message"
-          style={{
-            marginLeft: "8px",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "#76757a",
-            padding: 0,
-          }}
         >
           <FontAwesomeIcon icon={faPaperPlane} />
         </button>
       </form>
-    </div>
+    </main>
   );
 }
 

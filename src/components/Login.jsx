@@ -34,20 +34,29 @@ function Login() {
 
   return (
     <>
-      <form onSubmit={handleLogin}>
+      <h1>Login</h1>
+      <form className="login-register" onSubmit={handleLogin}>
+        <label htmlFor="email">Email</label>
         <input
+          id="email"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
+
+        <label htmlFor="password">Password</label>
         <input
-          value={password}
+          id="password"
           type="password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+
         <button type="submit">Login</button>
       </form>
+
       <p>
         Don't have an account? <Link to="/register">Sign up</Link>
       </p>

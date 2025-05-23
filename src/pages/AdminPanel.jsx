@@ -4,6 +4,8 @@ import { useAuth } from "../context/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 function AdminPanel() {
   const { user, token, logout } = useAuth();
   const [users, setUsers] = useState([]);
@@ -13,7 +15,7 @@ function AdminPanel() {
     if (user && user.role === "admin" && token) {
       const fetchUsers = async () => {
         try {
-          const res = await axios.get("http://localhost:8000/users", {
+          const res = await axios.get(`${API_BASE}/auth/users`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -36,7 +38,7 @@ function AdminPanel() {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:8000/users/${id}`, {
+      await axios.delete(`${API_BASE}/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

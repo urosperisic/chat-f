@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
@@ -26,7 +28,7 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       const res = await axios.post(
-        "http://localhost:8000/auth/login",
+        `${API_BASE}/auth/login`,
         new URLSearchParams({
           username: email,
           password: password,

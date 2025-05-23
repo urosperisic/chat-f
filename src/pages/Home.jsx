@@ -7,6 +7,8 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 function parseJwt(token) {
   try {
     const base64 = token.split(".")[1];
@@ -67,7 +69,7 @@ function Home() {
       console.error("WebSocket error", error);
     };
 
-    fetch("http://localhost:8000/messages/", {
+    fetch(`${API_BASE}/messages/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
@@ -120,7 +122,7 @@ function Home() {
     if (!window.confirm("Are you sure you want to delete this message?"))
       return;
 
-    fetch(`http://localhost:8000/messages/${id}`, {
+    fetch(`${API_BASE}/messages/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

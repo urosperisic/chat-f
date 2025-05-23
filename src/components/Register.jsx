@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -19,7 +21,7 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/auth/register", form, {
+      await axios.post(`${API_BASE}/auth/register`, form, {
         headers: { "Content-Type": "application/json" },
       });
       navigate("/login");

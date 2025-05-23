@@ -15,7 +15,7 @@ function AdminPanel() {
     if (user && user.role === "admin" && token) {
       const fetchUsers = async () => {
         try {
-          const res = await axios.get(`${API_BASE}/auth/users`, {
+          const res = await axios.get(`${API_BASE}/users`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

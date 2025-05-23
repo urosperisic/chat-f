@@ -25,7 +25,6 @@ function Home() {
   const [newMessage, setNewMessage] = useState("");
   const ws = useRef(null);
 
-  // Ref za scroll na kraj
   const messagesEndRef = useRef(null);
 
   const currentUser = token ? parseJwt(token) : null;
@@ -40,12 +39,16 @@ function Home() {
       return;
     }
 
-    ws.current = new WebSocket(
-      `ws://localhost:8000/ws/messages?token=${token}`
-    );
+    const wsProtocol = API_BASE.startsWith("https") ? "wss" : "ws";
+    const wsUrl = `${wsProtocol}://${API_BASE.replace(
+      /^https?:\/\//,
+      ""
+    )}/ws/messages?token=${token}`;
+
+    ws.current = new WebSocket(wsUrl);
 
     ws.current.onopen = () => {
-      console.log("WebSocket connected");
+      console.log("✅ WebSocket connected");
     };
 
     ws.current.onmessage = (event) => {
@@ -62,13 +65,14 @@ function Home() {
     };
 
     ws.current.onclose = (event) => {
-      console.log("WebSocket disconnected", event.code, event.reason);
+      console.log("⚠️ WebSocket disconnected", event.code, event.reason);
     };
 
     ws.current.onerror = (error) => {
       console.error("WebSocket error", error);
     };
 
+    // Fetch initial messages
     fetch(`${API_BASE}/messages/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -89,7 +93,6 @@ function Home() {
     };
   }, [token]);
 
-  // Scroll na kraj kad se promeni messages
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -104,7 +107,7 @@ function Home() {
       ws.current.send(newMessage);
       setNewMessage("");
     } else {
-      alert("WebSocket is not connected");
+      alert("❌ WebSocket is not connected");
     }
   };
 
@@ -185,7 +188,6 @@ function Home() {
         </div>
       ))}
 
-      {/* Prazan div za scroll */}
       <div ref={messagesEndRef} />
 
       <form

@@ -66,7 +66,7 @@ li {
 }
 
 .msg-bubble {
-  max-width: 70%;
+  max-width: 30%;
   padding: 1rem 2.5rem 1rem 1.5rem;
   border-radius: 2rem;
   background-color: #e0e0e0;
@@ -120,6 +120,26 @@ small {
   background-color: #2e7d32;
   color: #fff;
   /* border: 2px solid #0f5fd5; */
+}
+
+.date-separator {
+  text-align: center;
+  margin: 3rem 0 1rem 0;
+  font-size: 1.4rem;
+  color: #666;
+  font-weight: 600;
+  position: relative;
+}
+
+.date-separator::before,
+.date-separator::after {
+  content: "";
+  display: inline-block;
+  width: 30%;
+  height: 1px;
+  background-color: #ccc;
+  vertical-align: middle;
+  margin: 0 1rem;
 }
 
 /* ============================
@@ -254,6 +274,13 @@ textarea:focus {
 /* ============================
    Responsive
    ============================ */
+
+@media (max-width: 1200px) {
+  .msg-bubble {
+    max-width: 60%;
+  }
+}
+
 @media (max-width: 767px) {
   main,
   header {

@@ -80,13 +80,46 @@ function Home() {
         ws.current.close(1000, "Component unmounting");
       }
     };
-  }, [token]);
+  }, [token, logout]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  // Format datuma sa danom bez vremena
+  const formatDateOnly = (timestamp) => {
+    const date = new Date(timestamp);
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  // Helper za prikaz "Today" ako je danasnji datum
+  const isToday = (dateStr) => {
+    const today = new Date();
+    const d = new Date(dateStr);
+    return (
+      d.getFullYear() === today.getFullYear() &&
+      d.getMonth() === today.getMonth() &&
+      d.getDate() === today.getDate()
+    );
+  };
+
+  // Složimo niz poruka sa separatorima datuma
+  const messagesWithSeparators = [];
+  let lastDate = null;
+
+  messages.forEach((msg) => {
+    const msgDate = formatDateOnly(msg.timestamp);
+    if (msgDate !== lastDate) {
+      messagesWithSeparators.push({ type: "date-separator", date: msgDate });
+      lastDate = msgDate;
+    }
+    messagesWithSeparators.push({ type: "message", ...msg });
+  });
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -137,8 +170,24 @@ function Home() {
 
   return (
     <main>
-      {messages.map((msg) => {
+      {messagesWithSeparators.map((item, index) => {
+        if (item.type === "date-separator") {
+          return (
+            <div key={`sep-${item.date}-${index}`} className="date-separator">
+              {isToday(item.date)
+                ? "Today"
+                : new Date(item.date).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+            </div>
+          );
+        }
+
+        const msg = item;
         const isCurrentUser = msg.owner.id === currentUserId;
+
         return (
           <div
             className={`msg ${isCurrentUser ? "current-user" : ""}`}

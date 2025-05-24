@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAuth } from "../context/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrash,
-  faPaperPlane,
-  faRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -141,15 +137,6 @@ function Home() {
 
   return (
     <main>
-      <h1>Messages (WS)</h1>
-      <FontAwesomeIcon
-        icon={faRightFromBracket}
-        onClick={logout}
-        className="logout-btn fa-icon"
-        title="Logout"
-        style={{ cursor: "pointer" }}
-      />
-
       {messages.map((msg) => {
         const isCurrentUser = msg.owner.id === currentUserId;
         return (

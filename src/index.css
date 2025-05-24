@@ -24,6 +24,18 @@ main {
   padding: 5rem 10rem;
 }
 
+header {
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9;
+  padding: 1rem 10rem;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
 h1 {
   font-size: 4rem;
   margin-bottom: 2rem;
@@ -31,6 +43,12 @@ h1 {
 
 p {
   font-size: 1.6em;
+}
+
+li {
+  font-size: 1.6rem;
+  margin: 5rem 10rem;
+  list-style-type: none;
 }
 
 /* ============================
@@ -60,7 +78,7 @@ p {
 }
 
 .msg.current-user .msg-bubble {
-  background-color: #1a73e8;
+  background-color: #2e7d32;
   color: #fff;
   border-bottom-right-radius: 0.4rem;
   border-bottom-left-radius: 2rem;
@@ -99,9 +117,9 @@ small {
 }
 
 .test-user.current-user {
-  background-color: transparent;
-  color: #0f5fd5;
-  border: 2px solid #0f5fd5;
+  background-color: #2e7d32;
+  color: #fff;
+  /* border: 2px solid #0f5fd5; */
 }
 
 /* ============================
@@ -118,7 +136,7 @@ small {
 }
 
 .fa-icon:hover {
-  color: #0f5fd5 !important;
+  color: #2e7d32 !important;
   transform: scale(1.1);
 }
 
@@ -164,8 +182,8 @@ form.login-register button {
 
 form.login-register button:hover,
 form.login-register button:focus {
-  background-color: #1a73e8;
-  border-color: #1a73e8;
+  background-color: #2e7d32;
+  border-color: #2e7d32;
   color: #fff;
 }
 
@@ -175,14 +193,14 @@ form.login-register button:focus {
 button {
   padding: 0.6rem;
   background-color: transparent;
-  border: 1px solid #1a73e8;
-  color: #1a73e8;
+  border: 1px solid #2e7d32;
+  color: #2e7d32;
 }
 
 button:hover,
 button:focus {
-  background-color: #1a73e8;
-  border-color: #1a73e8;
+  background-color: #2e7d32;
+  border-color: #2e7d32;
   color: #fff;
 }
 
@@ -191,7 +209,7 @@ button:focus {
    ============================ */
 input:focus,
 textarea:focus {
-  outline: 2px solid #1a73e8;
+  outline: 2px solid #2e7d32;
   box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
 }
 
@@ -237,12 +255,22 @@ textarea:focus {
    Responsive
    ============================ */
 @media (max-width: 767px) {
-  main {
+  main,
+  header {
     padding: 2rem;
   }
 
   h1 {
     font-size: 3rem;
+  }
+
+  p {
+    font-size: 1.5em;
+  }
+
+  li {
+    font-size: 1.5rem;
+    margin: 2rem;
   }
 
   .message-form {

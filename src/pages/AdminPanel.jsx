@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const API_BASE = import.meta.env.VITE_API_URL;
 
 function AdminPanel() {
-  const { user, token, logout } = useAuth();
+  const { user, token } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,15 +52,6 @@ function AdminPanel() {
 
   return (
     <div>
-      <h1>Admin Panel</h1>
-      <FontAwesomeIcon
-        icon={faRightFromBracket}
-        onClick={logout}
-        className="logout-btn fa-icon"
-        title="Logout"
-        style={{ cursor: "pointer", fontSize: "2rem", color: "#76757a" }}
-      />
-
       <ul style={{ marginTop: "1rem" }}>
         {users.map((u) => (
           <li key={u.id}>

@@ -9,7 +9,7 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // 👈 dodat loading flag
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem("token");
       }
     }
-    setLoading(false); // 👈 kad završi proveru
+    setLoading(false);
   }, []);
 
   const login = async (email, password) => {
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem("token", accessToken);
       setToken(accessToken);
       setUser(decoded);
-      return decoded; // 👈 vraćamo korisnika
+      return decoded;
     } catch (error) {
       console.error("Login error:", error);
       throw new Error("Login failed");

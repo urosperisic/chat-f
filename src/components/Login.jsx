@@ -21,7 +21,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const user = await login(email, password); // dobiješ korisnika
+      const user = await login(email, password);
       if (user?.role === "admin") {
         navigate("/admin");
       } else {

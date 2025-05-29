@@ -88,7 +88,6 @@ function Home() {
     }
   }, [messages]);
 
-  // Format datuma sa danom bez vremena
   const formatDateOnly = (timestamp) => {
     const date = new Date(timestamp);
     const yyyy = date.getFullYear();
@@ -97,7 +96,6 @@ function Home() {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  // Helper za prikaz "Today" ako je danasnji datum
   const isToday = (dateStr) => {
     const today = new Date();
     const d = new Date(dateStr);
@@ -108,7 +106,6 @@ function Home() {
     );
   };
 
-  // Složimo niz poruka sa separatorima datuma
   const messagesWithSeparators = [];
   let lastDate = null;
 
@@ -169,7 +166,7 @@ function Home() {
   };
 
   return (
-    <main>
+    <main className="home-central">
       {messagesWithSeparators.map((item, index) => {
         if (item.type === "date-separator") {
           return (

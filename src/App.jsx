@@ -10,7 +10,6 @@ import Home from "./pages/Home";
 import AdminPanel from "./pages/AdminPanel";
 import { useAuth } from "./context/useAuth";
 
-// Header komponenta
 const Header = () => {
   const location = useLocation();
   const { logout } = useAuth();
@@ -22,7 +21,7 @@ const Header = () => {
   };
 
   if (location.pathname === "/login" || location.pathname === "/register") {
-    return null; // Ne prikazuj header na login/register stranici
+    return null;
   }
 
   return (
@@ -43,7 +42,6 @@ const Header = () => {
   );
 };
 
-// App komponenta
 function App() {
   return (
     <AuthProvider>

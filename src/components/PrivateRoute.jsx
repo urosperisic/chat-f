@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
 
-  if (loading) return <div>Loading...</div>; // ili neki spinner
+  if (loading) return <div>Loading...</div>;
 
   return user ? children : <Navigate to="/login" />;
 };
